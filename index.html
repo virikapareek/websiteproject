@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Starry Diary ✨</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(2px);
+      transition: background 0.5s ease;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 2rem;
+      border-radius: 20px;
+      width: 80%;
+      max-width: 700px;
+      box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+    }
+
+    textarea {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+      padding: 1rem;
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      resize: none;
+      outline: none;
+    }
+
+    .controls {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+
+    button, select {
+      margin-top: 0.5rem;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      background-color: #ffffff30;
+      color: white;
+    }
+
+    button:hover, select:hover {
+      background-color: #ffffff50;
+    }
+
+    audio {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2>🌙 Dear Diary...</h2>
+  <textarea id="diaryText" placeholder="Type your thoughts here..."></textarea>
+
+  <div class="controls">
+    <button onclick="saveDiary()">💾 Save</button>
+    <button onclick="toggleMusic()">🎵 Toggle Music</button>
+    <select onchange="changeTheme(this.value)">
+      <option value="default">Select Mood</option>
+      <option value="calm">Calm (Blue)</option>
+      <option value="warm">Warm (Peachy)</option>
+      <option value="dreamy">Dreamy (Lavender)</option>
+    </select>
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/10/29/audio_09fa835625.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<script>
+  let music = document.getElementById("bgMusic");
+  let isPlaying = false;
+
+  function toggleMusic() {
+    if (isPlaying) {
+      music.pause();
+    } else {
+      music.play();
+    }
+    isPlaying = !isPlaying;
+  }
+
+  function saveDiary() {
+    const text = document.getElementById("diaryText").value;
+    localStorage.setItem("myDiary", text);
+    alert("✨ Diary saved just for you!");
+  }
+
+  function loadDiary() {
+    const saved = localStorage.getItem("myDiary");
+    if (saved) document.getElementById("diaryText").value = saved;
+  }
+
+  function changeTheme(theme) {
+    const body = document.body;
+    switch (theme) {
+      case "calm":
+        body.style.backgroundImage = "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb')";
+        break;
+      case "warm":
+        body.style.backgroundImage = "url('https://images.unsplash.com/photo-1518837695005-2083093ee35b')";
+        break;
+      case "dreamy":
+        body.style.backgroundImage = "url('https://images.unsplash.com/photo-1604079628048-943b74fd9432')";
+        break;
+      default:
+        body.style.backgroundImage = "url('https://images.unsplash.com/photo-1506744038136-46273834b3fb')";
+    }
+  }
+
+  window.onload = loadDiary;
+</script>
+
+</body>
+</html>
